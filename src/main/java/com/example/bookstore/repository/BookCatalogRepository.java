@@ -1,10 +1,9 @@
 package com.example.bookstore.repository;
 
-import java.util.Optional;
-
+import com.example.bookstore.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.bookstore.entity.Book;
+import java.util.Optional;
 
 public interface BookCatalogRepository extends JpaRepository<Book,Long>{
     Optional<Book> findByIsbn(String isbn);

@@ -1,9 +1,9 @@
 package com.example.bookstore.service;
 
-import java.util.Collection;
-
 import com.example.bookstore.dto.BookRequest;
 import com.example.bookstore.dto.BookResponse;
+
+import java.util.Collection;
 
 public interface BookCatalogService {
 

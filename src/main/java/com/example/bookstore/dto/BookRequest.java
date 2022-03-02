@@ -1,9 +1,9 @@
 package com.example.bookstore.dto;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-
-import org.apache.tomcat.util.codec.binary.Base64;
 
 public class BookRequest {
 	@NotBlank
