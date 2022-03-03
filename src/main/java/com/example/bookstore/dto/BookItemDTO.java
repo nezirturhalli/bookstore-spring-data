@@ -1,5 +1,7 @@
 package com.example.bookstore.dto;
 
+import java.util.Objects;
+
 public class BookItemDTO {
 	private String isbn;
 	private int quantity;
@@ -21,6 +23,19 @@ public class BookItemDTO {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		BookItemDTO that = (BookItemDTO) o;
+		return isbn.equals(that.isbn);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(isbn);
 	}
 
 	@Override

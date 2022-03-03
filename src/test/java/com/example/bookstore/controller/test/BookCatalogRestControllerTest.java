@@ -79,7 +79,7 @@ class BookCatalogRestControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
-                .andExpect(jsonPath("$.isbn", containsString("9789750747502")))
+                .andExpect(jsonPath("$.isbn", is("9789750747502")))
                 .andExpect(jsonPath("$.author", is("TestAuthor")))
                 .andExpect(jsonPath("$.title", is("Test Title")))
                 .andExpect(jsonPath("$.pages", is(250)))
@@ -114,26 +114,36 @@ class BookCatalogRestControllerTest {
     @Test
     void addBook() throws Exception {
         var book = new Book();
-        book.setIsbn("9789750738610");
+        book.setIsbn("145352784");
         book.setPages(500);
         book.setPrice(55.55);
         book.setAuthor("Test Author3");
         book.setTitle("Test Title3");
         book.setYear(2015);
+        book.setCover(new byte[]{2,5,13,24});
+
+        BookRequest request = modelMapper.map(book, BookRequest.class);
 
         Mockito.when(bookCatalogService.addBook(modelMapper.map(book, BookRequest.class)))
                 .thenReturn(modelMapper.map(book, BookResponse.class));
         mockMvc.perform(post("/books")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(book)))
-                .andExpect(status().isOk());
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.isbn", is("145352784")))
+                .andExpect(jsonPath("$.author", is("Test Author3")))
+                .andExpect(jsonPath("$.title", is("Test Title3")))
+                .andExpect(jsonPath("$.pages",is(500)))
+                .andExpect(jsonPath("$.price",is(55.55)))
+                .andExpect(jsonPath("$.year",is(2015)))
+                .andExpect(jsonPath("$.cover",is(request.getCover())));
     }
 
     @Test
     void updateBook() throws Exception {
         var book = new Book();
-        book.setIsbn("9789750128610");
+        book.setIsbn("97890128610");
         book.setPages(900);
         book.setPrice(95.55);
         book.setAuthor("Test Author4");
@@ -146,7 +156,14 @@ class BookCatalogRestControllerTest {
         mockMvc.perform(put("/books/" + book.getIsbn())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(book)))
-                .andExpect(status().isOk());
+                        .content(objectMapper.writeValueAsString(book))
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.isbn", is("97890128610")))
+                .andExpect(jsonPath("$.author", is("Test Author4")))
+                .andExpect(jsonPath("$.title", is("Test Title4")))
+                .andExpect(jsonPath("$.pages",is(900)))
+                .andExpect(jsonPath("$.price",is(95.55)))
+                .andExpect(jsonPath("$.year",is(1995)));
     }
 }
