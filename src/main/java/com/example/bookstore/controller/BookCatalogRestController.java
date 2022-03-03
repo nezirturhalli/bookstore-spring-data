@@ -21,42 +21,42 @@ import java.util.Collection;
 @Validated
 public class BookCatalogRestController {
 
-	private BookCatalogService bookCatalogService;
+    private final BookCatalogService bookCatalogService;
 
-	public BookCatalogRestController(BookCatalogService bookCatalogService) {
-		this.bookCatalogService = bookCatalogService;
-	}
+    public BookCatalogRestController(BookCatalogService bookCatalogService) {
+        this.bookCatalogService = bookCatalogService;
+    }
 
-	@GetMapping("{isbn}")
-	public BookResponse findByIsbn(@PathVariable String isbn) {
-		return bookCatalogService.findBookByIsbn(isbn);
-	}
+    @GetMapping("{isbn}")
+    public BookResponse findByIsbn(@PathVariable String isbn) {
+        return bookCatalogService.findBookByIsbn(isbn);
+    }
 
-	@DeleteMapping("{isbn}")
-	public BookResponse deleteByIsbn(@PathVariable String isbn) {
-		return bookCatalogService.deleteBook(isbn);
-	}
+    @DeleteMapping("{isbn}")
+    public BookResponse deleteByIsbn(@PathVariable String isbn) {
+        return bookCatalogService.deleteBook(isbn);
+    }
 
-	@GetMapping
-	public Collection<BookResponse> findAllBooks(
-			@RequestParam(required = false, defaultValue = "0") @Min(0) int pageNo,
-			@RequestParam(required = false, defaultValue = "10") @Max(25) int pageSize) {
-		return bookCatalogService.findAll(pageNo, pageSize);
-	}
+    @GetMapping
+    public Collection<BookResponse> findAllBooks(
+            @RequestParam(required = false, defaultValue = "0") @Min(0) int pageNo,
+            @RequestParam(required = false, defaultValue = "10") @Max(25) int pageSize) {
+        return bookCatalogService.findAll(pageNo, pageSize);
+    }
 
-	@PostMapping
-	public BookResponse addBook(@RequestBody BookRequest book) {
-		return bookCatalogService.addBook(book);
-	}
+    @PostMapping
+    public BookResponse addBook(@RequestBody BookRequest book) {
+        return bookCatalogService.addBook(book);
+    }
 
-	@PutMapping("{isbn}")
-	public BookResponse updateBook(@PathVariable String isbn, @RequestBody BookRequest book) {
-		return bookCatalogService.updateBook(book);
-	}
+    @PutMapping("{isbn}")
+    public BookResponse updateBook(@PathVariable String isbn, @RequestBody BookRequest book) {
+        return bookCatalogService.updateBook(book);
+    }
 
-	@ExceptionHandler({ RestExceptionBase.class })
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorMessage handleErrors(RestExceptionBase e) {
-		return new ErrorMessage(e.getMessageId(), e.getDebugId(), e.getMessage());
-	}
+    @ExceptionHandler({RestExceptionBase.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleErrors(RestExceptionBase e) {
+        return new ErrorMessage(e.getMessageId(), e.getDebugId(), e.getMessage());
+    }
 }

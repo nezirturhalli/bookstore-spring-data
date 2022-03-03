@@ -1,15 +1,13 @@
 package com.example.bookstore.events;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public class PurchaseEvent extends BusinessEvent {
 
-	private final double sum;
+    private final double sum;
 
-	public PurchaseEvent(double sum) {
-		this.sum = sum;
-	}
-
-	public double getSum() {
-		return sum;
-	}
 
 }

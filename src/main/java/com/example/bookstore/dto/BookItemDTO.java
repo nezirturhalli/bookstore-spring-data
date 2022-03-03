@@ -1,45 +1,13 @@
 package com.example.bookstore.dto;
 
-import java.util.Objects;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 public class BookItemDTO {
-	private String isbn;
-	private int quantity;
+    private String isbn;
+    private int quantity;
 
-	public BookItemDTO() {
-	}
 
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		BookItemDTO that = (BookItemDTO) o;
-		return isbn.equals(that.isbn);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(isbn);
-	}
-
-	@Override
-	public String toString() {
-		return "BookItemDTO{" + "isbn='" + isbn + '\'' + ", quantity=" + quantity + '}';
-	}
 }

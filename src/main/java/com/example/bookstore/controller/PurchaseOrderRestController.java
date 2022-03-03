@@ -14,7 +14,7 @@ import org.springframework.web.context.annotation.RequestScope;
 @Validated
 public class PurchaseOrderRestController {
 
-	private PurchaseOrderService purchaseOrderService;
+	private final PurchaseOrderService purchaseOrderService;
 	
     public PurchaseOrderRestController(PurchaseOrderService purchaseOrderService) {
 		this.purchaseOrderService = purchaseOrderService;
