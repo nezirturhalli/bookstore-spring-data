@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Comparator;
 
 @Service
 public class StandardBookCatalogService implements BookCatalogService {
@@ -48,9 +47,9 @@ public class StandardBookCatalogService implements BookCatalogService {
     @Override
     public Collection<BookResponse> findAll(int pageNo, int pageSize) {
         return bookCatalogRepository.findAll(PageRequest.of(pageNo, pageSize))
+                .getContent()
                 .stream()
                 .map(book -> modelMapper.map(book, BookResponse.class))
-                .sorted(Comparator.comparing(BookResponse::author))
                 .toList();
     }
 
@@ -58,8 +57,8 @@ public class StandardBookCatalogService implements BookCatalogService {
     @Transactional
     public BookResponse addBook(BookRequest book) {
         try {
-            var managedBook = modelMapper.map(book, Book.class);
-            return modelMapper.map(bookCatalogRepository.save(managedBook), BookResponse.class);
+            var managedBook = bookCatalogRepository.save(modelMapper.map(book, Book.class));
+            return modelMapper.map(managedBook, BookResponse.class);
         } catch (Exception e) {
             throw new RestExceptionBase("Cannot insert book!", "duplicate.isbn", "3");
         }
